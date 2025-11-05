@@ -42,17 +42,17 @@
 		"test": "vitest --no-file-parallelism"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^5.0.0",
+		"@kitschpatrol/tldraw-cli": "^5.0.2",
 		"type-fest": "^5.2.0"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^5.7.4",
+		"@kitschpatrol/shared-config": "^5.8.1",
 		"@types/node": "^20.19.24",
 		"bumpp": "^10.3.1",
 		"path-type": "^6.0.0",
-		"tsdown": "^0.15.12",
+		"tsdown": "^0.16.0",
 		"typescript": "~5.9.3",
-		"vitest": "^4.0.6",
+		"vitest": "^4.0.7",
 		"zod": "^3.25.76"
 	},
 	"peerDependencies": {
