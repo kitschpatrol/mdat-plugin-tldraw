@@ -42,27 +42,25 @@
 		"test": "vitest --no-file-parallelism"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^5.0.2",
-		"type-fest": "^5.2.0"
+		"@kitschpatrol/tldraw-cli": "^5.0.6",
+		"type-fest": "^5.3.1"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^5.8.1",
-		"@types/node": "^20.19.24",
-		"bumpp": "^10.3.1",
+		"@kitschpatrol/shared-config": "^5.10.0",
+		"@types/node": "^20.19.25",
+		"bumpp": "^10.3.2",
+		"mdat": "^1.3.3",
 		"path-type": "^6.0.0",
-		"tsdown": "^0.16.0",
+		"tsdown": "^0.17.1",
 		"typescript": "~5.9.3",
-		"vitest": "^4.0.7",
+		"vitest": "^4.0.15",
 		"zod": "^3.25.76"
 	},
 	"peerDependencies": {
 		"mdat": "^1.1.0"
 	},
-	"packageManager": "pnpm@10.20.0",
+	"packageManager": "pnpm@10.25.0",
 	"engines": {
 		"node": ">=20.19.0"
-	},
-	"publishConfig": {
-		"access": "public"
 	}
 }
