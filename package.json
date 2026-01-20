@@ -1,6 +1,6 @@
 {
 	"name": "mdat-plugin-tldraw",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Mdat plugin to embed tldraw diagrams in Markdown files.",
 	"keywords": [
 		"markdown",
