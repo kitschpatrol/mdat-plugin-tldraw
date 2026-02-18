@@ -9,7 +9,7 @@ import { z } from 'zod'
 
 export default {
 	tldraw: {
-		async content(options?) {
+		async content(options?: unknown) {
 			// Src is required, may be a path to a local tldr file or a URL
 			const { alt = 'tldraw diagram', src } = z
 				.object({
@@ -19,7 +19,8 @@ export default {
 				.parse(options)
 
 			// Save the tldr svg to assets in both light and dark mode, with a hash
-			const { assetsPath } = await loadConfig()
+			const config = await loadConfig()
+			const { assetsPath } = config
 
 			// Make assets path if necessary
 			await fs.mkdir(assetsPath, { recursive: true })
@@ -35,7 +36,7 @@ export default {
 				const possibleLightPath = path.join(assetsPath, `${fileName}-${sourceHash}-light.svg`)
 				const possibleDarkPath = path.join(assetsPath, `${fileName}-${sourceHash}-dark.svg`)
 				if ((await isFile(possibleLightPath)) && (await isFile(possibleDarkPath))) {
-					return getPictureElement(possibleLightPath, possibleDarkPath, alt)
+					return getPictureElement(config, possibleLightPath, possibleDarkPath, alt)
 				}
 			}
 
@@ -63,43 +64,40 @@ export default {
 			await fs.rename(darkPath, darkPathHashed)
 
 			// Clean up stale files
-			// For the url case, check if there are old source files that need to be deleted
-			// eslint-disable-next-line ts/no-unnecessary-condition
-			if (sourceHash !== undefined) {
-				const darkPathHashedName = path.basename(darkPathHashed)
-				const lightPathHashedName = path.basename(lightPathHashed)
+			const darkPathHashedName = path.basename(darkPathHashed)
+			const lightPathHashedName = path.basename(lightPathHashed)
 
-				// Turns "tldraw-sketch-132cbdb8-light.svg"
-				// into just "tldraw-sketch-" so we can find stale versions of the current file
-				const filePrefix = lightPathHashedName.replace(`${sourceHash}-light.svg`, '')
+			// Turns "tldraw-sketch-132cbdb8-light.svg"
+			// into just "tldraw-sketch-" so we can find stale versions of the current file
+			const filePrefix = lightPathHashedName.replace(`${sourceHash}-light.svg`, '')
 
-				const currentAssets = await fs.readdir(assetsPath)
-				for (const asset of currentAssets) {
-					const assetName = path.basename(asset)
-					if (
-						assetName !== darkPathHashedName &&
-						assetName !== lightPathHashedName &&
-						assetName.startsWith(filePrefix) &&
-						assetName.endsWith('.svg')
-					) {
-						await fs.rm(path.join(assetsPath, assetName))
-					}
+			const currentAssets = await fs.readdir(assetsPath)
+			for (const asset of currentAssets) {
+				const assetName = path.basename(asset)
+				if (
+					assetName !== darkPathHashedName &&
+					assetName !== lightPathHashedName &&
+					assetName.startsWith(filePrefix) &&
+					assetName.endsWith('.svg')
+				) {
+					await fs.rm(path.join(assetsPath, assetName))
 				}
 			}
 
-			return getPictureElement(lightPathHashed, darkPathHashed, alt)
+			return getPictureElement(config, lightPathHashed, darkPathHashed, alt)
 		},
 	},
 } satisfies Rules
 
 // Helpers
 
-async function getPictureElement(
+function getPictureElement(
+	config: { packageFile: string | undefined },
 	lightPath: string,
 	darkPath: string,
 	alt: string,
-): Promise<string> {
-	const { packageFile } = await loadConfig()
+): string {
+	const { packageFile } = config
 
 	if (packageFile === undefined) {
 		throw new Error('No package file found')

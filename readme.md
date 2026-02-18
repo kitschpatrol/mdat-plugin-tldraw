@@ -29,7 +29,7 @@ The plugin automatically generates both "light" and "dark" SVG variations of a t
 
 Generated assets are intelligently hashed to aide in cache busting. For locally referenced files, the image will only be regenerated when the content in the source file changes.
 
-The rule Accepts either a path to a local `.tldr` file, or remote tldraw URLs.
+The rule accepts either a path to a local `.tldr` file, or remote tldraw URLs.
 
 The implementation is based on [@kitschpatrol/tldraw-cli](https://github.com/kitschpatrol/tldraw-cli), which depends on Puppeteer to generate the assets, so it can be a bit slow. Referencing local files instead of remote URLs is recommended for improved performance.
 
