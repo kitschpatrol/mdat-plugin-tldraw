@@ -27,15 +27,15 @@ export default {
 			const markdownFilePath = context?.filePath ?? process.cwd()
 			const assetsPath = path.resolve(path.dirname(markdownFilePath), destination)
 
-			const assetsPathIsDirectory = await isDirectory(assetsPath)
-			if (!assetsPathIsDirectory) {
-				throw new Error('Destination must be a directory`')
-			}
-
 			// Make assets path if necessary
 			await fs.mkdir(assetsPath, {
 				recursive: true,
 			})
+
+			const assetsPathIsDirectory = await isDirectory(assetsPath)
+			if (!assetsPathIsDirectory) {
+				throw new Error('Destination must be a directory')
+			}
 
 			// If it's a file, check the source file for changes...
 			// If it's a URL, we have to download it every time
