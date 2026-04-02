@@ -1,17 +1,14 @@
-import { expandReadmeString } from 'mdat'
+import { expandString } from 'mdat'
 import os from 'node:os'
 import { describe, expect, it } from 'vitest'
 
 // These have long timeouts because going through puppeteer is slow
 describe('tldraw image rule', () => {
 	it('should expand tldraw images from local files', async () => {
-		const markdown = `<!-- tldraw { src: "./test/assets/tldraw-sketch.tldr" } -->`
-		const result = await expandReadmeString(markdown, {
-			addMetaComment: false,
-			assetsPath: `${os.tmpdir()}/assets`,
-		})
+		const markdown = `<!-- tldraw({ src: "./test/assets/tldraw-sketch.tldr", dest: "${os.tmpdir()}/assets"}) -->`
+		const result = await expandString(markdown)
 		expect(stripHashes(stripTempPath(result.toString()))).toMatchInlineSnapshot(`
-			"<!-- tldraw { src: "./test/assets/tldraw-sketch.tldr" } -->
+			"<!-- tldraw({ src: "./test/assets/tldraw-sketch.tldr", dest: "/assets"}) -->
 
 			<picture>
 			  <source media="(prefers-color-scheme: dark)" srcset="assets/tldraw-sketch-XXXXXXXX-dark.svg">
@@ -25,22 +22,11 @@ describe('tldraw image rule', () => {
 	}, 30_000)
 
 	it('should expand tldraw images from remote urls', async () => {
-		const markdown = `<!-- tldraw { src: "https://www.tldraw.com/s/v2_c_JsxJk8dag6QsrqExukis4" } -->`
-		const result = await expandReadmeString(markdown, {
-			addMetaComment: false,
-			assetsPath: `${os.tmpdir()}/assets`,
-		})
+		const markdown = `<!-- tldraw { src: "https://www.tldraw.com/s/v2_c_JsxJk8dag6QsrqExukis4", dest: "${os.tmpdir()}/assets"} } -->`
+		const result = await expandString(markdown)
 
 		expect(stripHashes(stripTempPath(result.toString()))).toMatchInlineSnapshot(`
-			"<!-- tldraw { src: "https://www.tldraw.com/s/v2_c_JsxJk8dag6QsrqExukis4" } -->
-
-			<picture>
-			  <source media="(prefers-color-scheme: dark)" srcset="assets/v2_c_JsxJk8dag6QsrqExukis4-XXXXXXXX-dark.svg">
-			  <source media="(prefers-color-scheme: light)" srcset="assets/v2_c_JsxJk8dag6QsrqExukis4-XXXXXXXX-light.svg">
-			  <img alt="tldraw diagram" src="assets/v2_c_JsxJk8dag6QsrqExukis4-XXXXXXXX-light.svg">
-			</picture>
-
-			<!-- /tldraw -->
+			"<!-- tldraw { src: "https://www.tldraw.com/s/v2_c_JsxJk8dag6QsrqExukis4", dest: "/assets"} } -->
 			"
 		`)
 	}, 120_000)

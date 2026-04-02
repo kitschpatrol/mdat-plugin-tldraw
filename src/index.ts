@@ -1,29 +1,41 @@
-import type { Rules } from 'mdat'
+import type { Config } from 'mdat'
 import { tldrawToImage } from '@kitschpatrol/tldraw-cli'
-import { loadConfig } from 'mdat'
 import crypto from 'node:crypto'
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { isFile } from 'path-type'
+import { isDirectory, isFile } from 'path-type'
 import { z } from 'zod'
 
 export default {
 	tldraw: {
-		async content(options?: unknown) {
+		async content(options?: unknown, context?) {
 			// Src is required, may be a path to a local tldr file or a URL
-			const { alt = 'tldraw diagram', src } = z
+			const {
+				alt = 'tldraw diagram',
+				dest: destination = './assets',
+				src,
+			} = z
 				.object({
 					alt: z.string().optional(),
+					dest: z.string().optional(),
 					src: z.string(),
 				})
 				.parse(options)
 
 			// Save the tldr svg to assets in both light and dark mode, with a hash
-			const config = await loadConfig()
-			const { assetsPath } = config
+
+			const markdownFilePath = context?.filePath ?? process.cwd()
+			const assetsPath = path.resolve(path.dirname(markdownFilePath), destination)
+
+			const assetsPathIsDirectory = await isDirectory(assetsPath)
+			if (!assetsPathIsDirectory) {
+				throw new Error('Destination must be a directory`')
+			}
 
 			// Make assets path if necessary
-			await fs.mkdir(assetsPath, { recursive: true })
+			await fs.mkdir(assetsPath, {
+				recursive: true,
+			})
 
 			// If it's a file, check the source file for changes...
 			// If it's a URL, we have to download it every time
@@ -36,7 +48,7 @@ export default {
 				const possibleLightPath = path.join(assetsPath, `${fileName}-${sourceHash}-light.svg`)
 				const possibleDarkPath = path.join(assetsPath, `${fileName}-${sourceHash}-dark.svg`)
 				if ((await isFile(possibleLightPath)) && (await isFile(possibleDarkPath))) {
-					return getPictureElement(config, possibleLightPath, possibleDarkPath, alt)
+					return getPictureElement(markdownFilePath, possibleLightPath, possibleDarkPath, alt)
 				}
 			}
 
@@ -84,26 +96,20 @@ export default {
 				}
 			}
 
-			return getPictureElement(config, lightPathHashed, darkPathHashed, alt)
+			return getPictureElement(markdownFilePath, lightPathHashed, darkPathHashed, alt)
 		},
 	},
-} satisfies Rules
+} satisfies Config
 
 // Helpers
 
 function getPictureElement(
-	config: { packageFile: string | undefined },
+	markdownFilePath: string,
 	lightPath: string,
 	darkPath: string,
 	alt: string,
 ): string {
-	const { packageFile } = config
-
-	if (packageFile === undefined) {
-		throw new Error('No package file found')
-	}
-
-	const basePath = path.dirname(packageFile)
+	const basePath = path.dirname(markdownFilePath)
 
 	const relativeLightPath = path.relative(basePath, lightPath)
 	const relativeDarkPath = path.relative(basePath, darkPath)
@@ -123,6 +129,7 @@ async function getFileHash(filePath: string): Promise<string> {
 	return hash.digest('hex').slice(0, 8)
 }
 
+const FILE_EXTENSION_REGEX = /\.[^./]+$/
 function stripExtension(file: string): string {
-	return file.replace(/\.[^./]+$/, '')
+	return file.replace(FILE_EXTENSION_REGEX, '')
 }
