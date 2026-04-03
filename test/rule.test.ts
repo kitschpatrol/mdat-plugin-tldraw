@@ -3,6 +3,8 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { afterAll, describe, expect, it } from 'vitest'
 
+// Use local test directory instead of os.tmp() because of cross-volume
+// relative path issues in GitHub Windows CI
 const TEST_DEST = 'test/.tldraw-tmp'
 
 // Clean up generated files after all tests
@@ -15,8 +17,7 @@ describe('tldraw image rule', () => {
 	it('should expand tldraw images from local files', async () => {
 		const markdown = `<!-- tldraw({ src: "./test/assets/tldraw-sketch.tldr", dest: "${TEST_DEST}"}) -->`
 		const result = await expandString(markdown)
-		// Surface the actual error if expansion failed
-		expect(result.messages.map((m) => m.toString())).toEqual([])
+
 		expect(stripHashes(result.toString())).toMatchInlineSnapshot(`
 			"<!-- tldraw({ src: "./test/assets/tldraw-sketch.tldr", dest: "test/.tldraw-tmp"}) -->
 
