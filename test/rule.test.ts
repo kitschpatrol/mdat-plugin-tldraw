@@ -15,6 +15,8 @@ describe('tldraw image rule', () => {
 	it('should expand tldraw images from local files', async () => {
 		const markdown = `<!-- tldraw({ src: "./test/assets/tldraw-sketch.tldr", dest: "${TEST_DEST}"}) -->`
 		const result = await expandString(markdown)
+		// Surface the actual error if expansion failed
+		expect(result.messages.map((m) => m.toString())).toEqual([])
 		expect(stripHashes(result.toString())).toMatchInlineSnapshot(`
 			"<!-- tldraw({ src: "./test/assets/tldraw-sketch.tldr", dest: "test/.tldraw-tmp"}) -->
 
