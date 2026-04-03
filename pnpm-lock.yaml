@@ -30,6 +30,9 @@ importers:
       mdat:
         specifier: ^2.1.0
         version: 2.1.0(@types/node@20.19.39)(prettier@3.8.1)(typescript@5.9.3)
+      puppeteer:
+        specifier: ^24.40.0
+        version: 24.40.0(typescript@5.9.3)
       remark-mdat:
         specifier: ^2.1.0
         version: 2.1.0
