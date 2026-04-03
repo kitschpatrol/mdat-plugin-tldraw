@@ -7,7 +7,7 @@ const TEST_DEST = 'test/.tldraw-tmp'
 
 // Clean up generated files after all tests
 afterAll(async () => {
-	await fs.rm(path.join(process.cwd(), TEST_DEST), { recursive: true, force: true })
+	await fs.rm(path.join(process.cwd(), TEST_DEST), { force: true, recursive: true })
 })
 
 // These have long timeouts because going through puppeteer is slow

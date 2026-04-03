@@ -106,13 +106,13 @@ export default {
 // Helpers
 
 function getPictureElement(
-	baseDir: string,
+	baseDirectory: string,
 	lightPath: string,
 	darkPath: string,
 	alt: string,
 ): string {
-	const relativeLightPath = path.relative(baseDir, lightPath).split(path.sep).join('/')
-	const relativeDarkPath = path.relative(baseDir, darkPath).split(path.sep).join('/')
+	const relativeLightPath = path.relative(baseDirectory, lightPath).split(path.sep).join('/')
+	const relativeDarkPath = path.relative(baseDirectory, darkPath).split(path.sep).join('/')
 
 	// https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#specifying-the-theme-an-image-is-shown-to
 	return `<picture>
