@@ -24,8 +24,10 @@ export default {
 
 			// Save the tldr svg to assets in both light and dark mode, with a hash
 
-			const markdownFilePath = context?.filePath ?? process.cwd()
-			const assetsPath = path.resolve(path.dirname(markdownFilePath), destination)
+			// When called with a file context, resolve relative to the file's directory.
+			// When called without (e.g. expandString), resolve relative to cwd.
+			const markdownDirectory = context?.filePath ? path.dirname(context.filePath) : process.cwd()
+			const assetsPath = path.resolve(markdownDirectory, destination)
 
 			// Make assets path if necessary
 			await fs.mkdir(assetsPath, {
@@ -48,7 +50,7 @@ export default {
 				const possibleLightPath = path.join(assetsPath, `${fileName}-${sourceHash}-light.svg`)
 				const possibleDarkPath = path.join(assetsPath, `${fileName}-${sourceHash}-dark.svg`)
 				if ((await isFile(possibleLightPath)) && (await isFile(possibleDarkPath))) {
-					return getPictureElement(markdownFilePath, possibleLightPath, possibleDarkPath, alt)
+					return getPictureElement(markdownDirectory, possibleLightPath, possibleDarkPath, alt)
 				}
 			}
 
@@ -96,7 +98,7 @@ export default {
 				}
 			}
 
-			return getPictureElement(markdownFilePath, lightPathHashed, darkPathHashed, alt)
+			return getPictureElement(markdownDirectory, lightPathHashed, darkPathHashed, alt)
 		},
 	},
 } satisfies Config
@@ -104,15 +106,13 @@ export default {
 // Helpers
 
 function getPictureElement(
-	markdownFilePath: string,
+	baseDirectory: string,
 	lightPath: string,
 	darkPath: string,
 	alt: string,
 ): string {
-	const basePath = path.dirname(markdownFilePath)
-
-	const relativeLightPath = path.relative(basePath, lightPath)
-	const relativeDarkPath = path.relative(basePath, darkPath)
+	const relativeLightPath = path.relative(baseDirectory, lightPath).split(path.sep).join('/')
+	const relativeDarkPath = path.relative(baseDirectory, darkPath).split(path.sep).join('/')
 
 	// https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#specifying-the-theme-an-image-is-shown-to
 	return `<picture>
