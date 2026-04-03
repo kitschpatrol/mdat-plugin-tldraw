@@ -14,4 +14,3 @@ publicHoistPattern:
   - '*remark*'
   - '*stylelint*'
   - 'case-police'
-  - puppeteer
