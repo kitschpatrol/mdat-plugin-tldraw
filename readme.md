@@ -59,6 +59,8 @@ export default {
 } satisfies Config
 ```
 
+If you're using pnpm, make sure `puppeteer` is in your `pnpm-workspace.yaml` file's [`publicHoistPattern`](https://pnpm.io/settings#publichoistpattern) array.
+
 ## Usage
 
 Assuming you have a `sketch.tldr` file in the root of your project, you can embed it in your Markdown file this:
