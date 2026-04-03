@@ -21,6 +21,7 @@ describe('tldraw image rule', () => {
 		`)
 	}, 30_000)
 
+	//It.skipIf(process.env.CI)?
 	it('should expand tldraw images from remote urls', async () => {
 		const markdown = `<!-- tldraw { src: "https://www.tldraw.com/s/v2_c_JsxJk8dag6QsrqExukis4", dest: "${os.tmpdir()}/assets"} } -->`
 		const result = await expandString(markdown)
