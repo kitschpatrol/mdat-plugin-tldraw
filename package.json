@@ -49,10 +49,10 @@
 	},
 	"devDependencies": {
 		"@kitschpatrol/shared-config": "^7.0.1",
-		"@types/node": "~20.19.37",
+		"@types/node": "~20.19.39",
 		"bumpp": "^11.0.1",
 		"mdat": "^2.1.0",
-		"remark-mdat": "^2.1.0",
+		"remark-mdat": "^2.2.0",
 		"tsdown": "^0.21.7",
 		"typescript": "~5.9.3",
 		"vitest": "^4.1.2"
