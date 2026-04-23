@@ -123,13 +123,17 @@ Older `mdat` 1.x compatible versions [remain available](https://www.npmjs.com/pa
 
 ## Maintainers
 
-[@kitschpatrol](https://github.com/kitschpatrol)
+[kitschpatrol](https://github.com/kitschpatrol)
 
 <!-- contributing -->
 
 ## Contributing
 
-[Issues](https://github.com/kitschpatrol/mdat-plugin-tldraw/issues) and pull requests are welcome.
+[Issues](https://github.com/kitschpatrol/mdat-plugin-tldraw/issues) are welcome and appreciated.
+
+Please open an issue to discuss changes before submitting a pull request. Unsolicited PRs (especially AI-generated ones) are unlikely to be merged.
+
+This repository uses [@kitschpatrol/shared-config](https://github.com/kitschpatrol/shared-config) (via its `ksc` CLI) for linting and formatting, plus [MDAT](https://github.com/kitschpatrol/mdat) for readme placeholder expansion.
 
 <!-- /contributing -->
 
@@ -137,6 +141,6 @@ Older `mdat` 1.x compatible versions [remain available](https://www.npmjs.com/pa
 
 ## License
 
-[MIT](license.txt) © Eric Mika
+[MIT](license.txt) © [Eric Mika](https://ericmika.com)
 
 <!-- /license -->

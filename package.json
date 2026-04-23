@@ -36,32 +36,33 @@
 	],
 	"scripts": {
 		"build": "tsdown --no-fixed-extension --tsconfig tsconfig.build.json",
-		"clean": "git rm -f pnpm-lock.yaml ; git clean -fdX",
+		"clean": "shx rm -f pnpm-lock.yaml && git clean -fdX -e !.claude/",
 		"fix": "ksc fix",
 		"lint": "ksc lint",
-		"release": "bumpp --commit 'Release: %s' && pnpm run build && NPM_AUTH_TOKEN=$(op read 'op://Personal/npm/token') && pnpm publish",
+		"release": "bumpp --commit 'Release: %s' && pnpm build && NPM_AUTH_TOKEN=$(op read 'op://Personal/npm/token') && pnpm publish",
 		"test": "vitest run"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^5.0.14",
+		"@kitschpatrol/tldraw-cli": "^5.0.16",
 		"path-type": "^6.0.0",
 		"zod": "^4.3.6"
 	},
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^7.0.1",
+		"@kitschpatrol/shared-config": "^7.5.0",
 		"@types/node": "~20.19.39",
 		"bumpp": "^11.0.1",
-		"mdat": "^2.1.0",
-		"remark-mdat": "^2.2.0",
-		"tsdown": "^0.21.7",
+		"mdat": "^2.3.0",
+		"remark-mdat": "^2.2.1",
+		"shx": "^0.4.0",
+		"tsdown": "^0.21.10",
 		"typescript": "~5.9.3",
-		"vitest": "^4.1.2"
+		"vitest": "^4.1.5"
 	},
 	"peerDependencies": {
 		"mdat": "^2.0.0",
 		"remark-mdat": "^2.0.0"
 	},
-	"packageManager": "pnpm@10.33.0",
+	"packageManager": "pnpm@10.33.2",
 	"engines": {
 		"node": ">=20.19.0"
 	},
