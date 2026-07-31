@@ -26,7 +26,10 @@ export default {
 
 			// When called with a file context, resolve relative to the file's directory.
 			// When called without (e.g. expandString), resolve relative to cwd.
-			const markdownDirectory = context?.filePath ? path.dirname(context.filePath) : process.cwd()
+			const markdownDirectory =
+				context?.filePath === undefined || context.filePath === ''
+					? process.cwd()
+					: path.dirname(context.filePath)
 			const assetsPath = path.resolve(markdownDirectory, destination)
 
 			// Make assets path if necessary
@@ -61,6 +64,10 @@ export default {
 				transparent: true,
 			})
 
+			if (lightPath === undefined) {
+				throw new Error(`tldrawToImage returned no output for light-mode export of "${src}"`)
+			}
+
 			// Generate hash if it was a url, will be used for both light and dark filenames
 			sourceHash ??= await getFileHash(lightPath)
 
@@ -73,6 +80,10 @@ export default {
 				output: assetsPath,
 				transparent: true,
 			})
+
+			if (darkPath === undefined) {
+				throw new Error(`tldrawToImage returned no output for dark-mode export of "${src}"`)
+			}
 
 			const darkPathHashed = `${stripExtension(darkPath)}-${sourceHash}-dark.svg`
 			await fs.rename(darkPath, darkPathHashed)
@@ -129,7 +140,7 @@ async function getFileHash(filePath: string): Promise<string> {
 	return hash.digest('hex').slice(0, 8)
 }
 
-const FILE_EXTENSION_REGEX = /\.[^./]+$/
+const FILE_EXTENSION_REGEX = /\.[^.\/]+$/v
 function stripExtension(file: string): string {
 	return file.replace(FILE_EXTENSION_REGEX, '')
 }

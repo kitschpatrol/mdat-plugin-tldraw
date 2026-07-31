@@ -6,8 +6,8 @@
 
 <!-- badges -->
 
-[![NPM Package mdat-plugin-tldraw](https://img.shields.io/npm/v/mdat-plugin-tldraw.svg)](https://npmjs.com/package/mdat-plugin-tldraw)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/license/mit/)
+[![NPM Package mdat-plugin-tldraw](https://img.shields.io/npm/v/mdat-plugin-tldraw.svg)](https://www.npmjs.com/package/mdat-plugin-tldraw)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/license/mit)
 [![CI](https://github.com/kitschpatrol/mdat-plugin-tldraw/actions/workflows/ci.yml/badge.svg)](https://github.com/kitschpatrol/mdat-plugin-tldraw/actions/workflows/ci.yml)
 
 <!-- /badges -->
@@ -24,7 +24,7 @@ _**This is a plugin for the [mdat CLI tool](https://github.com/kitschpatrol/mdat
 
 This plugin makes it easy to embed [tldraw](https://www.tldraw.com) diagrams as SVG images in your Markdown files.
 
-The plugin automatically generates both "light" and "dark" SVG variations of a tldraw sketch, and emits a `<picture>` element per [GitHub's guidelines](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#specifying-the-theme-an-image-is-shown-to) to present the correctly themed image based on the viewer's preferences.
+The plugin automatically generates both "light" and "dark" SVG variations of a tldraw sketch, and emits a `<picture>` element per [GitHub's guidelines](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#the-picture-element) to present the correctly themed image based on the viewer's preferences.
 
 Generated assets are intelligently hashed to aide in cache busting. For locally referenced files, the image will only be regenerated when the content in the source file changes.
 

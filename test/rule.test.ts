@@ -46,5 +46,5 @@ describe('tldraw image rule', () => {
 // Helpers
 
 function stripHashes(text: string): string {
-	return text.replaceAll(/-[\da-f]{8}/g, '-XXXXXXXX')
+	return text.replaceAll(/-[\da-f]{8}/gv, '-XXXXXXXX')
 }
