@@ -16,3 +16,12 @@ allowBuilds:
   unrs-resolver: true
 minimumReleaseAgeExclude:
   - '@kitschpatrol/*'
+  - lognow@0.8.5
+  - mdat@3.6.2
+  - metascope@0.12.2
+  - read-pyproject@0.4.1
+  - remark-mdat@3.1.1
+peerDependencyRules:
+  allowedVersions:
+    # No eslint 10 release yet, but runtime-compatible (used via eslint-plugin-astro)
+    'eslint-plugin-jsx-a11y>eslint': '10'

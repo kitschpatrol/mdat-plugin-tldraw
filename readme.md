@@ -26,7 +26,7 @@ This plugin makes it easy to embed [tldraw](https://www.tldraw.com) diagrams as 
 
 The plugin automatically generates both "light" and "dark" SVG variations of a tldraw sketch, and emits a `<picture>` element per [GitHub's guidelines](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#the-picture-element) to present the correctly themed image based on the viewer's preferences.
 
-Generated assets are intelligently hashed to aide in cache busting. For locally referenced files, the image will only be regenerated when the content in the source file changes.
+Generated assets are intelligently hashed to aid in cache busting. For locally referenced files, the image will only be regenerated when the content in the source file changes.
 
 The rule accepts either a path to a local `.tldr` file, or remote tldraw URLs.
 
@@ -49,19 +49,17 @@ pnpm add -D mdat-plugin-tldraw
 Register the plugin in your mdat config file, e.g. `mdat.config.ts`:
 
 ```ts
-import type { Config } from 'mdat'
+import { defineConfig } from 'mdat'
 import tldraw from 'mdat-plugin-tldraw'
 
-export default {
-  rules: {
-    ...tldraw,
-  },
-} satisfies Config
+export default defineConfig({
+  ...tldraw,
+})
 ```
 
 ## Usage
 
-Assuming you have a `sketch.tldr` file in the root of your project, you can embed it in your Markdown file this:
+Assuming you have a `sketch.tldr` file in the root of your project, you can embed it in your Markdown file like this:
 
 ```markdown
 <!-- tldraw({ src: "./sketch.tldr" }) -->
@@ -117,9 +115,9 @@ Receive:
 
 ## Compatibility
 
-This version of the plugin is only compatible with `mdat` 2.x.
+This version of the plugin is only compatible with `mdat` 3.x.
 
-Older `mdat` 1.x compatible versions [remain available](https://www.npmjs.com/package/mdat-plugin-tldraw/v/1.0.9).
+Older `mdat` 2.x compatible versions [remain available](https://www.npmjs.com/package/mdat-plugin-tldraw/v/2.0.3), as do `mdat` 1.x compatible versions [here](https://www.npmjs.com/package/mdat-plugin-tldraw/v/1.0.9).
 
 ## Maintainers
 
