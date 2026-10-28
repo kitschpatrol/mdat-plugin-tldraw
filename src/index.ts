@@ -1,12 +1,12 @@
-import type { Config } from 'mdat'
 import { tldrawToImage } from '@kitschpatrol/tldraw-cli'
+import { defineConfig } from 'mdat'
 import crypto from 'node:crypto'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { isDirectory, isFile } from 'path-type'
 import { z } from 'zod'
 
-export default {
+export default defineConfig({
 	tldraw: {
 		async content(options?: unknown, context?) {
 			// Src is required, may be a path to a local tldr file or a URL
@@ -112,7 +112,7 @@ export default {
 			return getPictureElement(markdownDirectory, lightPathHashed, darkPathHashed, alt)
 		},
 	},
-} satisfies Config
+})
 
 // Helpers
 
