@@ -34,17 +34,26 @@ The implementation is based on [@kitschpatrol/tldraw-cli](https://github.com/kit
 
 ## Getting started
 
+<!-- dependencies -->
+
 ### Dependencies
 
-We'll assume you have [mdat](https://github.com/kitschpatrol/mdat) installed either globally or in your local project.
+- [Node.js](https://nodejs.org/) 24.16.0 or newer (specifically `^24.16.0 || >=26.3.0`)
+- [mdat](https://www.npmjs.com/package/mdat) `^3.0.0` _(peer dependency)_
+
+<!-- /dependencies -->
+
+<!-- install({ dev: true }) -->
 
 ### Installation
 
-Install the plugin as a development dependency:
+Add it to your project as a development dependency:
 
-```bash
-pnpm add -D mdat-plugin-tldraw
+```sh
+npm install --save-dev mdat-plugin-tldraw
 ```
+
+<!-- /install -->
 
 Register the plugin in your mdat config file, e.g. `mdat.config.ts`:
 
