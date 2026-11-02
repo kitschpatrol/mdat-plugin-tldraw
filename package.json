@@ -43,7 +43,7 @@
 		"test": "vitest run"
 	},
 	"dependencies": {
-		"@kitschpatrol/tldraw-cli": "^6.1.0",
+		"@kitschpatrol/tldraw-cli": "^6.1.1",
 		"path-type": "^6.0.0",
 		"zod": "^4.6.7"
 	},
